@@ -22,7 +22,11 @@
             About this project
         </div>
         <div class="panel-body">
-            <p class="text-info">You know these fancy github badges, right? They show you if a repository is maintained, built successfully and so on. If you're familiar with the Sublime Package Control then you maybe know about its download statistics. Now you can show these numbers in your repositories on github, gitlab, bitbucket and any markdown editor.<br><br>Just put your package name into the form and choose which number to show off. A markdown code will be generated for you and you can paste it right in your README or wherever you like.<br><br><a class="btn btn-primary" href="https://packagecontrol.io/packages/Copy%20Filepath%20With%20Line%20Numbers">See Demo here</a></a></p>
+            <p class="text-info">
+                You know these fancy github badges, right? They show you if a repository is maintained, built successfully and so on. If you're familiar with the Sublime Package Control then you maybe know about its download statistics. Now you can show these numbers in your repositories on github, gitlab, bitbucket and any markdown editor.<br><br>Just put your package name into the form and choose which number to show off. A markdown code will be generated for you and you can paste it right in your README or wherever you like.
+                <br><br>
+                <a class="btn btn-primary" href="{{ path('badge_demo') }}">See Demo here</a>
+            </p>
         </div>
     </div>
     <p class="alert alert-info">{{ counter|default(0) }} codes have been generated this way.</p>
