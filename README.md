@@ -15,10 +15,9 @@ http://sublime-badge.nick-hat-boecker.de/
 
 # Demo
 
-Total: [![SublimeBadge](http://sublime-badge.nick-hat-boecker.de/badge/total/Copy%20Filepath%20With%20Line%20Numbers.svg)](http://sublime-badge.nick-hat-boecker.de/)<br>
-Linux: [![SublimeBadge](http://sublime-badge.nick-hat-boecker.de/badge/osx/Copy%20Filepath%20With%20Line%20Numbers.svg)](http://sublime-badge.nick-hat-boecker.de/)<br>
-Mac OS: [![SublimeBadge](http://sublime-badge.nick-hat-boecker.de/badge/linux/Copy%20Filepath%20With%20Line%20Numbers.svg)](http://sublime-badge.nick-hat-boecker.de/)<br>
-Windows: [![SublimeBadge](http://sublime-badge.nick-hat-boecker.de/badge/windows/Copy%20Filepath%20With%20Line%20Numbers.svg)](http://sublime-badge.nick-hat-boecker.de/)<br>
+[![SublimeBadge](http://sublime-badge.nick-hat-boecker.de/badge/total/Copy%20Filepath%20With%20Line%20Numbers.svg)](http://sublime-badge.nick-hat-boecker.de/)
+[![SublimeBadge](http://sublime-badge.nick-hat-boecker.de/badge/windows/Copy%20Filepath%20With%20Line%20Numbers.svg)](http://sublime-badge.nick-hat-boecker.de/)
+[![SublimeBadge](http://sublime-badge.nick-hat-boecker.de/badge/osx/Copy%20Filepath%20With%20Line%20Numbers.svg)](http://sublime-badge.nick-hat-boecker.de/) [![SublimeBadge](http://sublime-badge.nick-hat-boecker.de/badge/linux/Copy%20Filepath%20With%20Line%20Numbers.svg)](http://sublime-badge.nick-hat-boecker.de/)
 
 # License
 
