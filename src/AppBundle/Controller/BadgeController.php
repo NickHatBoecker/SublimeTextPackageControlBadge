@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class BadgeController extends Controller
 {
     /**
-     * @Route("/badge/{badgeType}/{package}.svg", name="get_badge"))
+     * @Route("/badge/{badgeType}/{package}.svg/", name="get_badge"))
      *
      * @param string $badgeType
      * @param string $package
@@ -22,11 +22,18 @@ class BadgeController extends Controller
         try {
             $response = new Response($this->renderView('badge.html.twig', [
                 'num' => $this->get(Badge::class)->getNum($package, $badgeType),
+                'badgeType' => $badgeType,
+                'colors' => [
+                    Badge::BADGETYPE_TOTAL => '#aaa',
+                    Badge::BADGETYPE_LINUX => '#ef9f9f',
+                    Badge::BADGETYPE_WINDOWS => '#a8bacf',
+                    Badge::BADGETYPE_MACOS => '#bd9cb7',
+                ],
             ]));
 
             $response->headers->set('Content-type', 'image/svg+xml');
         } catch (\Exception $e) {
-            $response = new Response("Could not retrieve numbers. Is the package name correct?", 400);
+            $response = new Response($e->getMessage(), 400);
         }
 
         $response->headers->set('Access-Control-Allow-Origin','*');

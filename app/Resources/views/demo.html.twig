@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>Demo</h1>
+    </div>
+
+    {% set packages = [
+        "Copy Filepath With Line Numbers",
+        "Theme - Flatland",
+        "DreamMaker Language Client"
+    ] %}
+
+    {% for package in packages %}
+        <h2>{{ package }}</h2>
+
+        {{ render(controller(
+            'AppBundle:Badge:getBadge', {
+                'package': package,
+                'badgeType': 'total'
+            }
+        )) }}
+
+        {{ render(controller(
+            'AppBundle:Badge:getBadge', {
+                'package': package,
+                'badgeType': 'windows'
+            }
+        )) }}
+
+        {{ render(controller(
+            'AppBundle:Badge:getBadge', {
+                'package': package,
+                'badgeType': 'linux'
+            }
+        )) }}
+
+        {{ render(controller(
+            'AppBundle:Badge:getBadge', {
+                'package': package,
+                'badgeType': 'osx'
+            }
+        )) }}
+
+        <hr>
+    {% endfor %}
+{% endblock body %}
