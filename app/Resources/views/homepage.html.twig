@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form _self %}
+
+{% use 'bootstrap_3_layout.html.twig' with form_widget_simple as base_form_widget_simple %}
+
+{% block form_widget_simple %}
+    {{ block('base_form_widget_simple') }}
+
+    {% if help is defined %}
+        <small><span class="help-block">{{ help|raw }}</span></small>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>Generate your Sublime Text Badge</h1>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            About this project
+        </div>
+        <div class="panel-body">
+            <p class="text-info">You know these fancy github badges, right? They show you if a repository is maintained, built successfully and so on. If you're familiar with the Sublime Package Control then you maybe know about its download statistics. Now you can show these numbers in your repositories on github, gitlab, bitbucket and any markdown editor.<br><br>Just put your package name into the form and choose which number to show off. A markdown code will be generated for you and you can paste it right in your README or wherever you like.<br><br><a class="btn btn-primary" href="https://packagecontrol.io/packages/Copy%20Filepath%20With%20Line%20Numbers">See Demo here</a></a></p>
+        </div>
+    </div>
+    <p class="alert alert-info">{{ counter|default(0) }} codes have been generated this way.</p>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <button type="submit" class="btn btn-primary">Generate Markdown Code</button>
+    {{ form_end(form) }}
+
+    {% if markdownCode is defined and markdownCode %}
+        <div class="page-header">
+            <h2>Your markdown code <small>put it in your README</small></h2>
+        </div>
+        <div class="bg-info" style="padding: 24px;">{{ markdownCode }}</div>
+
+        <div class="page-header">
+            <h2>Preview</h2>
+        </div>
+        {{ render(controller(
+            'AppBundle:Badge:getBadge', {
+                'package': package,
+                'badgeType': badgeType
+            }
+        )) }}
+    {% elseif markdownCode is defined and not markdownCode %}
+        <div class="alert alert-danger" role="alert" style="margin-top: 24px;">
+            <strong>ERROR:</strong> Could not read package. Is the package name correct?
+        </div>
+    {% endif %}
+{% endblock body %}
