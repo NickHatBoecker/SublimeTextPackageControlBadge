@@ -8,7 +8,7 @@ class SublimePackageControl
     /** @var string  */
     private static $baseUrl = 'https://packagecontrol.io/packages/';
 
-    /** @var \DOMXpath */
+    /** @var object */
     private $doc;
 
     /**
@@ -16,8 +16,7 @@ class SublimePackageControl
      */
     public function __construct($package)
     {
-        $packageUrl = sprintf('%s%s', self::$baseUrl, $package);
-        $this->doc = $this->getDoc($packageUrl);
+        $this->doc = $this->getDocFromPackage($package);
     }
 
     /**
@@ -27,10 +26,7 @@ class SublimePackageControl
      */
     public function getTotal()
     {
-        $node = $this->doc->query('//ul[@class="totals"]//span[@class="installs"]');
-        $num = trim($node[0]->textContent);
-
-        return $num;
+        return $this->shortenNumber($this->doc->installs->total);
     }
 
     /**
@@ -41,10 +37,7 @@ class SublimePackageControl
      */
     public function getPlatform($platform)
     {
-        $node = $this->doc->query('//span[@class="'.$platform.' installs"]');
-        $num = trim($node[0]->textContent);
-
-        return $num;
+        return $this->shortenNumber($this->doc->installs->$platform);
     }
 
     /**
@@ -53,10 +46,8 @@ class SublimePackageControl
      */
     public static function packageIsValid($package)
     {
-        $packageUrl = sprintf('%s%s', self::$baseUrl, $package);
-
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $packageUrl);
+        curl_setopt($ch, CURLOPT_URL, sprintf('%s%s.json', self::$baseUrl, $package));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -70,20 +61,60 @@ class SublimePackageControl
     }
 
     /**
-     * Create document from package url in order to crawl stats.
+     * Get JSON from package
      *
-     * @param string $packageUrl
-     * @return \DOMXpath
+     * @param string $package
+     * @return string
      */
-    private function getDoc($packageUrl)
+    private function getDocFromPackage($package)
     {
-        $pageContent = file_get_contents($packageUrl);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, sprintf('%s%s.json', self::$baseUrl, $package));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
 
-        libxml_use_internal_errors(true);
-        $doc = new \DOMDocument();
-        $doc->loadHtml($pageContent);
-        libxml_clear_errors();
+        if ($httpCode === 200) {
+            return json_decode($response);
+        }
 
-        return new \DOMXpath($doc);
+        return null;
+    }
+
+    /**
+     * Use to convert large positive numbers in to short form like 1K+, 100K+, 199K+, 1M+, 10M+, 1B+ etc
+     *
+     * @param string $n
+     * @return string
+     */
+    private function shortenNumber($n) {
+        if ($n < 1000) {
+            // 1 - 999
+            $newNumber = floor($n);
+            $suffix = '';
+        } else if ($n < 1000000) {
+            // 1k-999k
+            $newNumber = floor($n / 1000);
+            $suffix = 'K';
+        } else if ($n < 1000000000) {
+            // 1m-999m
+            $newNumber = floor($n / 1000000);
+            $suffix = 'M';
+        } else if ($n < 1000000000000) {
+            // 1b-999b
+            $newNumber = floor($n / 1000000000);
+            $suffix = 'B';
+        } else if ($n >= 1000000000000) {
+            // 1t+
+            $newNumber = floor($n / 1000000000000);
+            $suffix = 'T';
+        }
+
+        if ($newNumber < 1000 || ($newNumber >= 1000 && $suffix)) {
+            return $newNumber . $suffix;
+        }
+
+        return $n;
     }
 }
