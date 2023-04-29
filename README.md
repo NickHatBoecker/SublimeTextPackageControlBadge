@@ -1,7 +1,7 @@
 Sublime Text Package Control Badge
 =============
 
-[![HitCount](https://hits.dwyl.io/NickHatBoecker/SublimeTextPackageControlBadge.svg)](https://hits.dwyl.io/NickHatBoecker/SublimeTextPackageControlBadge)
+[![HitCount](https://hits.dwyl.com/NickHatBoecker/SublimeTextPackageControlBadge.svg)](https://hits.dwyl.com/NickHatBoecker/SublimeTextPackageControlBadge)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/NickHatBoecker/SublimeTextPackageControlBadge/issues)
 
 # About
